@@ -1,0 +1,152 @@
+Program 6
+
+#loading data frame
+lc<-read.csv("C:/Users/vijet/Downloads/Book1.csv")
+lcd<-data.frame(lc)
+print(lcd)
+sapply(lcd,class)
+ndf<-data.frame(data.matrix(data.frame(unclass(lcd))))
+sapply(ndf, class)
+print(ndf)
+cep=cor(ndf[,c(2:7)])
+print(cep)
+pairs(ndf[,c(2:7)])
+y=cep[6,1:5]
+print(y)
+sd=sort(y,decreasing=TRUE)
+print(sd)
+cnt=1
+print("Selected Attributes")
+while(cnt<=length(y))
+{
+  if(y[cnt]>0.5)
+    print(y[cnt])
+  cnt=cnt+1
+}
+
+Program 7
+
+wd<-iris
+names(wd)
+attach(wd)
+unique(Species)
+ncol(wd)
+nrow(wd)
+#installing required packages
+install.packages("ClusterR")
+install.packages("cluster")
+#loading he packages
+library(cluster)
+library(ClusterR)
+#checking if the packages are installed or not
+system.file(package='ggplot2')
+#taking out target variable
+niris<-iris[,-5]
+names(niris)
+str(niris)
+#selecting same centroid for each runtime
+set.seed(240)
+kmen<-kmeans(niris,centers =3,nstart = 20)
+print(kmen)
+#checking the length of all unique values of original dataset
+length(iris$Species[iris$Species=="setosa"])
+length(iris$Species[iris$Species=="versicolor"])
+length(iris$Species[iris$Species=="virginica"])
+#creating confusion matrix
+con<-table(iris$Species,kmen$cluster)
+print(con)
+kmen$centers[,c("Sepal.Length","Sepal.Width")]
+y_km<-kmen$cluster
+plot(niris$Sepal.Length,niris$Sepal.Width,col=kmen$cluster,main="Kmeans with 3 Clusters")
+points(kmen$centers[,c("Sepal.Length","Sepal.Width")],col=1:3,pch=8,cex=3)
+clusplot(niris[,c("Sepal.Length","Sepal.Width")],y_km,lines=8,shade = TRUE,color = TRUE,labels = 2,plotchar = FALSE,span = TRUE,main="Cluster Iris",xlab="Sapal.Length",ylab="Sapal.Width")
+install.packages("animation")
+set.seed(234)
+library(animation)
+kmeans.ani(niris[1:2],3)
+
+Program 8
+
+install.packages("arulesViz")
+library(arules)
+library(arulesViz)
+SupMarTra<- read.csv("C:/Users/vijet/Desktop/pgrm8.dataset.csv", header = T, colClasses ="factor")
+summary(SupMarTra)
+length(SupMarTra)
+dim(SupMarTra)
+View(SupMarTra)
+rules<- apriori(SupMarTra)
+rules<-apriori(SupMarTra, parameter=list( supp = .5, conf = .8))
+inspect(rules)
+rules<- apriori(SupMarTra, parameter=list(minlen = 2, maxlen = 5, supp=.5, conf=.8))
+inspect(rules)
+rules<- apriori(SupMarTra, parameter=list(minlen = 2, maxlen = 5, supp=.5, conf=.8),appearance = list(none=c(I1="NO",I2="NO",I3="NO",I4="NO",I5="NO")))
+inspect(rules)
+write(rules, file = "newrules.csv", sep = ",")
+#library(arulesViz)
+plot(rules)
+plot(rules, method = "grouped")
+plot(rules, method = "graph", control = list(type="items"))
+
+Program 9
+
+#install.packages("e1071")
+#install.packages("caTools")
+#install.packages("class")
+library(e1071)
+library(caTools)
+library(class)
+#used to fix the randomization
+sample(LETTERS,6)
+set.seed(9)
+sample(LETTERS,6)
+set.seed(50)
+sample(LETTERS,6)
+dset<-iris
+head(dset,5)
+nrow(dset)
+#divding the dataset into training and testing
+sam_size<-floor(0.6*nrow(dset))
+print(sam_size)
+set.seed(50)
+index<-sample(seq_len(nrow(dset)),sam_size)
+print(index)
+print(dset[index,1])
+train_set<-dset[index,]
+test_set<-dset[-index,]
+nrow(train_set)
+nrow(test_set)
+#normalization using standardization
+train_s<-scale(train_set[,1:4])
+test_s<-scale(test_set[,1:4])
+head(train_s,5)
+head(test_s)
+#KNN Algorithm
+class_Knn<-knn(train = train_s,test = test_s,cl=train_set$Species,k=7)
+print(class_Knn)
+cm<-table(test_set$Species,class_Knn)
+print(cm)
+error_rate<-mean(class_Knn!=test_set$Species)
+print(error_rate)
+print(paste("Accuracy=",1-error_rate))
+
+Program 10
+
+df <- data.frame(hours=c(1, 2, 4, 5, 5, 6, 6, 7, 8, 10, 11, 11, 12, 12, 14),
+                 score=c(64, 66, 76, 73, 74, 81, 83, 82, 80, 88, 84, 82, 91, 93, 89))
+head(df)
+attach(df)
+scatter.smooth(hours, score,main='Hours studied vs. Exam Score')
+boxplot(score)
+model<- lm(score~hours)
+summary(model)
+res <-resid(model)
+plot(fitted(model),res)
+abline(0,0)
+qqnorm(res)
+qqline(res)
+
+
+
+
+      
