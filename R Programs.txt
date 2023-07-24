@@ -217,23 +217,20 @@ transactions <- list(
 # Convert the transaction dataset to transactions format
 trans <- as(transactions, "transactions")
 print(trans)
+#to find the association rules with Aprior
+rules<- apriori(trans)
+#set support and confidence (support = 3 and confidence = 70%)
+rules<-apriori(trans, parameter=list( supp = .5, conf = .8))
+inspect(rules)
+# set the maximum and minimum length of rules
+rules<- apriori(trans, parameter=list(minlen = 2, maxlen = 5, supp=.5, conf=.8))
+inspect(rules)
+#writing rules to CSV files
+write(rules, file = "D:/data3.CSV", sep = ",")
+#plotting the graph
+plot(rules)
+plot(rules, method = "graph", control = list(type="items"))
 
-# Find the association rules with Apriori
-rules <- apriori(trans, parameter = list(minlen = 2, maxlen = 5, supp = 0.5, conf = 0.8))
-
-# Filter out rules containing specific items
-filtered_rules <- subset(rules, subset = !(lhs %pin% c("I1", "I2", "I3", "I4", "I5")))
-
-# Inspect the filtered rules
-inspect(filtered_rules)
-
-# Writing rules to a CSV file
-write(filtered_rules, file = "C:/Users/vijet/Desktop/Test.csv", sep = ",")
-
-# Plotting the graph
-plot(filtered_rules)
-# Plotting the DAG with custom line colors
-plot(rules, method = "graph", colors	 =  c("#EE0000FF", "#000000"))
 
 Program 9
 
