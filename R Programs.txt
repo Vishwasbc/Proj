@@ -1,0 +1,294 @@
+Program 1
+
+wd<-data.frame(women)
+attach(wd)
+cor(height,weight)
+plot(height,weight,main="Main title",xlab="X axis Height",ylab ="Y axis Weight",pch=19,frame=FALSE)
+height<-c(1,12,15,26,30,38,45,50)
+weight<-c(50,45,38,30,26,15,12,1)
+cor(height,weight)
+plot(height,weight,main="Main title",xlab="X axis Height",ylab ="Y axis Weight",pch=19,frame=FALSE)
+
+
+Program 2
+
+lc=read.csv('C:/Users/vijet/Downloads/LungCap.csv')
+lcd=data.frame(lc)
+ncol(lcd)
+nrow(lcd)
+head(lcd,6)
+names(lcd)
+tail(lcd,5)
+attach(lcd)
+boxplot(LungCap.cc.,main='boxplot of Lung Capacity',ylab='Lung Capacity',ylim=c(0,16),las=1)
+summary(LungCap.cc.)
+head(lcd)
+table(Smoke)
+table(Gender)
+barplot(table(Smoke))
+table(Age..years.)
+boxplot(LungCap.cc.[Gender=='male'],main='Lung Capacity Plot',ylab='Lung Capacity',xlab=NULL,names='MALE',ylim=c(0,16),border='Black')
+summary(LungCap.cc.[Gender=='male'])
+summary(LungCap.cc.[Gender=='female'])
+boxplot(LungCap.cc.[Gender=='female'],main='Lung Capacity Plot',ylab='Lung Capacity',xlab=NULL,names='FEMALE',ylim=c(0,16),border='Black')
+boxplot(LungCap.cc.~Gender,main='Lung Capacity Plot',ylab='Lung Capacity',xlab=NULL,ylim=c(0,16),las=1,order='Black')
+ages1<-cut(lcd$Age..years.,breaks = c(0,13,15,17,25),labels = c("<=13","14|15","16|17",">=18"))
+head(ages1,5)
+boxplot(lcd$LungCap.cc.~lcd$Smoke*ages1,ylab = 'Lung Capacity',xlab="",main="Lung Capacity Smokers vs Non Somkers",col=c(4,2),las=2)
+
+Program 3
+
+air=airquality
+head(air)
+summary(air)
+air[!complete.cases(air),]
+boxplot(air,main="Air Quality Dataframe")
+attach(air)
+boxplot(Ozone,main="Air Quality Ozone")
+is.na(Ozone)
+print(Ozone[!is.na(Ozone)])
+summary(Ozone)
+uf=63.25+1.5*(63.25-18)#Upper Fence
+print(uf)
+boxplot(subset(air,Ozone<131),main="Ozone < 131")#Boxplot For values < 131
+summary(Wind)
+ufw=11.5+1.5*(11.5-7.4)
+print(ufw)
+boxplot(subset(air,Wind<17),main="Wind <17")
+newair=subset(air,Wind<17&Ozone<131)#Removing Outliers
+boxplot(newair,main="Updated Boxplot")
+newair[!complete.cases(newair),]
+summary(newair$Solar.R)
+sum(is.na(newair$Solar.R))
+print(newair$Solar.R[!is.na(newair$Solar.R)])#non missing values of Solar Attribute
+solmean<-mean(newair$Solar.R[!is.na(newair$Solar.R)])
+print(solmean)
+newair$Solar.R[is.na(newair$Solar.R)]<-solmean
+summary(newair)
+
+Program 4
+
+#loading dataset
+Data<-data.frame(iris)
+head(Data,5)
+ncol(Data)
+#extracting predictive attributes
+Pdata<-iris[,1:4]
+print(Pdata)
+#log data transformation(for converting all data into same scale)
+Logiris<-log(Pdata)
+print(Logiris)
+#Principle Component Analysis on the transformed data
+pc<-prcomp(Logiris)
+print(pc)
+attributes(pc)
+print(pc$sdev)
+print(pc$center)#median value of each attributes
+print(pc$x)
+summary(pc)
+
+Program 5
+
+#creating a dataset
+friends<-data.frame(name=c("Bala","Ganesh","Jeevan"),age=c(43,38,42),edu=c(2.0,4.2,4.1))
+attach(friends)
+print(friends)
+#creating matrix for parameters edu and age
+m1=matrix(c(edu,age),nrow=3,byrow = FALSE)
+print(m1)
+#calculate euclidian distance using distance function
+e1=dist(m1,method ='euclidian')
+print(e1)
+#age data normalization
+ageD=age/10
+print(friends)
+#creating matrix for parameters edu and ageD
+m2=matrix(c(edu,ageD),nrow=3,byrow = FALSE)
+print(m2)
+#calculate euclidian distance using distance function
+e2=dist(m2,method ='euclidian')
+print(e2)
+#min-max normalization for age
+rangA=max(age)-min(age)
+print(rangA)
+min_maxA=(age-min(age))/rangA
+print(min_maxA)
+#min-max normalization for edu
+rangE=max(edu)-min(edu)
+print(rangE)
+min_maxE=(edu-min(edu))/rangE
+print(min_maxE)
+#creating matrix for min-max rescaled data
+m3=matrix(c(min_maxA,min_maxE),nrow=3,byrow="FALSE")
+print(m3)
+# euclidian distance for min-max normalized data
+e3=dist(m3,method="euclidian")
+print(e3)
+#printing all results
+print(e1)
+print(e2)
+print(e3)
+
+Program 6
+
+#loading data frame
+lc<-read.csv("C:/Users/vijet/Downloads/Book1.csv")
+lcd<-data.frame(lc)
+print(lcd)
+sapply(lcd,class)
+ndf<-data.frame(data.matrix(data.frame(unclass(lcd))))
+sapply(ndf, class)
+print(ndf)
+cep=cor(ndf[,c(2:7)])
+print(cep)
+pairs(ndf[,c(2:7)])
+y=cep[6,1:5]
+print(y)
+sd=sort(y,decreasing=TRUE)
+print(sd)
+cnt=1
+print("Selected Attributes")
+while(cnt<=length(y))
+{
+  if(y[cnt]>0.5)
+    print(y[cnt])
+  cnt=cnt+1
+}
+
+Program 7
+
+wd<-iris
+names(wd)
+attach(wd)
+unique(Species)
+ncol(wd)
+nrow(wd)
+#installing required packages
+install.packages("ClusterR")
+install.packages("cluster")
+#loading he packages
+library(cluster)
+library(ClusterR)
+#checking if the packages are installed or not
+system.file(package='ggplot2')
+#taking out target variable
+niris<-iris[,-5]
+names(niris)
+str(niris)
+#selecting same centroid for each runtime
+set.seed(240)
+kmen<-kmeans(niris,centers =3,nstart = 20)
+print(kmen)
+#checking the length of all unique values of original dataset
+length(iris$Species[iris$Species=="setosa"])
+length(iris$Species[iris$Species=="versicolor"])
+length(iris$Species[iris$Species=="virginica"])
+#creating confusion matrix
+con<-table(iris$Species,kmen$cluster)
+print(kmen$cluster)
+print(con)
+kmen$centers[,c("Sepal.Length","Sepal.Width")]
+y_km<-kmen$cluster
+plot(niris$Sepal.Length,niris$Sepal.Width,col=kmen$cluster,main="Kmeans with 3 Clusters")
+points(kmen$centers[,c("Sepal.Length","Sepal.Width")],col=1:3,pch=8,cex=3)
+clusplot(niris[,c("Sepal.Length","Sepal.Width")],y_km,lines=8,shade = TRUE,color = TRUE,labels = 2,plotchar = FALSE,span = TRUE,main="Cluster Iris",xlab="Sapal.Length",ylab="Sapal.Width")
+install.packages("animation")
+set.seed(234)
+library(animation)
+kmeans.ani(niris[1:2],3)
+
+Program 8
+
+# Install and load the arules and arulesViz packages
+#install.packages(c("arules", "arulesViz"))
+library(arules)
+library(arulesViz)
+
+# Create a transaction dataset
+transactions <- list(
+  T1 = c("Hot Dogs", "Buns", "Ketchup"),
+  T2 = c("Hot Dogs", "Buns"),
+  T3 = c("Hot Dogs", "Coke", "Chips"),
+  T4 = c("Chips", "Coke"),
+  T5 = c("Chips", "Ketchup"),
+  T6 = c("Hot Dogs", "Coke", "Chips")
+)
+
+# Convert the transaction dataset to transactions format
+trans <- as(transactions, "transactions")
+print(trans)
+
+# Find the association rules with Apriori
+rules <- apriori(trans, parameter = list(minlen = 2, maxlen = 5, supp = 0.5, conf = 0.8))
+
+# Filter out rules containing specific items
+filtered_rules <- subset(rules, subset = !(lhs %pin% c("I1", "I2", "I3", "I4", "I5")))
+
+# Inspect the filtered rules
+inspect(filtered_rules)
+
+# Writing rules to a CSV file
+write(filtered_rules, file = "C:/Users/vijet/Desktop/Test.csv", sep = ",")
+
+# Plotting the graph
+plot(filtered_rules)
+# Plotting the DAG with custom line colors
+plot(rules, method = "graph", colors	 =  c("#EE0000FF", "#000000"))
+
+Program 9
+
+#install.packages("e1071")
+#install.packages("caTools")
+#install.packages("class")
+library(e1071)
+library(caTools)
+library(class)
+#used to fix the randomization
+sample(LETTERS,6)
+set.seed(9)
+sample(LETTERS,6)
+set.seed(50)
+sample(LETTERS,6)
+dset<-iris
+head(dset,5)
+nrow(dset)
+#divding the dataset into training and testing
+sam_size<-floor(0.6*nrow(dset))
+print(sam_size)
+set.seed(50)
+index<-sample(seq_len(nrow(dset)),sam_size)
+print(index)
+print(dset[index,1])
+train_set<-dset[index,]
+test_set<-dset[-index,]
+nrow(train_set)
+nrow(test_set)
+#normalization using standardization
+train_s<-scale(train_set[,1:4])
+test_s<-scale(test_set[,1:4])
+head(train_s,5)
+head(test_s)
+#KNN Algorithm
+class_Knn<-knn(train = train_s,test = test_s,cl=train_set$Species,k=7)
+print(class_Knn)
+cm<-table(test_set$Species,class_Knn)
+print(cm)
+error_rate<-mean(class_Knn!=test_set$Species)
+print(error_rate)
+print(paste("Accuracy=",1-error_rate))
+
+Program 10
+
+df <- data.frame(hours=c(1, 2, 4, 5, 5, 6, 6, 7, 8, 10, 11, 11, 12, 12, 14),
+                 score=c(64, 66, 76, 73, 74, 81, 83, 82, 80, 88, 84, 82, 91, 93, 89))
+head(df)
+attach(df)
+scatter.smooth(hours, score,main='Hours studied vs. Exam Score')
+boxplot(score)
+model<- lm(score~hours)
+summary(model)
+res <-resid(model)
+plot(fitted(model),res)
+abline(0,0)
+qqnorm(res)
+qqline(res)      
