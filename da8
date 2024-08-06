@@ -1,0 +1,34 @@
+library(arules)
+SupMarTra <- read.csv("C:/Users/User/Downloads/snackitem (1).csv", header = TRUE, colClasses = "factor")
+summary(SupMarTra)
+length(SupMarTra)
+dim(SupMarTra)
+View(SupMarTra)
+rules <- apriori(SupMarTra, parameter = list(supp = 0.5, conf = 0.8))
+inspect(rules)
+rules <- apriori(SupMarTra, parameter = list(minlen = 2, maxlen = 5, supp = 0.5, conf = 0.8),
+                 appearance = list(none = c("I1=NO", "I2=NO", "I3=NO", "I4=NO", "I5=NO")))
+inspect(rules)
+write(rules, file = "D:/data3.csv", sep = ",")
+library(arulesViz)
+plot(rules)  # Default plot
+plot(rules, method = "grouped")  # Grouped matrix plot
+plot(rules, method = "graph", control = list(type = "items"))  # Graph-based visualization
+
+8th program:-
+library(arules)
+SupMarTra <- read.csv("C:/Users/User/Downloads/snackitem (1).csv", header = TRUE, colClasses = "factor")
+summary(SupMarTra)
+length(SupMarTra)
+dim(SupMarTra)
+View(SupMarTra)
+transactions <- as(SupMarTra, "transactions")
+frequent_itemsets <- apriori(transactions, parameter = list(target = "frequent itemsets", supp = 0.5))
+inspect(frequent_itemsets)
+rules <- apriori(transactions, parameter = list(supp = 0.5, conf = 0.8))
+inspect(rules)
+write(rules, file = "D:/data3.csv", sep = ",")
+library(arulesViz)
+plot(rules)  # Default plot
+plot(rules, method = "grouped")  # Grouped matrix plot
+plot(rules, method = "graph", control = list(type = "items"))  # Graph-based visualization
