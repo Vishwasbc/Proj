@@ -1,0 +1,17 @@
+rm(list = ls(all.names = TRUE)) 
+input = read.csv("filter.csv")
+print(input)
+x = cor(input[,c(2:7)])
+print(x)
+pairs(input[,c(2:7)]) )#print the scatter plot matrix for correlation matrix
+y = x[6,1:5]#Extract the last row of correlation matrix excluding company
+print(y)
+x= sort(y,decreasing = TRUE)
+print(x)
+cnt =1
+print("selected attributes")
+while(cnt<=length(y))
+{ if (y[cnt]>.5)
+print(y[cnt])
+cnt=cnt+1
+}
