@@ -1,0 +1,21 @@
+//positive correlatiom
+print(women)
+x <- women$height
+y <- women$weight
+mean(x)
+cor(x,y)
+plot(x, y, main = "Main title", xlab = "X axis Height", ylab = "Y axis Weight", pch = 19, frame =
+FALSE)
+print(cor(x,y,method='Pearson'))
+print(cor(x,y,method='Kendall'))
+print(cor(x,y,method='Spearman'))
+
+//negative correlation
+print(mtcars)
+x<- mtcars$wt
+y<- mtcars$mpg
+mean(x)
+cor(x,y)
+print(cor(x,y,method='Pearson'))
+print(cor(x,y,method='Spearman'))
+plot(x, y, main = "Wt v/s mpg",xlab = "x axis wt", ylab = "Y axis mpg", pch = 19, frame = FALSE)
